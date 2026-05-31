@@ -48,3 +48,4 @@ _supporting_stuff/
 messages.json
 cmd/runit
 cmd/tcpproxy
+.agents

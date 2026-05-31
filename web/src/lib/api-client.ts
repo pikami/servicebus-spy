@@ -51,6 +51,7 @@ class APIClient {
   async sendMessage(message: ServiceBusMessage): Promise<void> {
     const response = await fetch(`${this.baseUrl}/messages/send`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(message),
     });
 
