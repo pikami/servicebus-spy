@@ -1,0 +1,9 @@
+.git
+.gitignore
+**/.DS_Store
+
+web/node_modules
+web/dist
+
+**/*.md
+skills-lock.json

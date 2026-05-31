@@ -1,0 +1,93 @@
+builds:
+  - binary: servicebus-spy
+    main: ./cmd/app
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+
+release:
+  prerelease: auto
+
+universal_binaries:
+  - replace: true
+
+brews:
+  - name: servicebus-spy
+    homepage: "https://github.com/pikami/servicebus-spy"
+    description: Azure Service Bus traffic inspector and proxy
+    repository:
+      owner: pikami
+      name: homebrew-brew
+    commit_author:
+      name: pikami
+      email: git@pikami.org
+    skip_upload: auto
+
+archives:
+  - format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - README.md
+
+dockers:
+  - id: docker-linux-amd64
+    goos: linux
+    goarch: amd64
+    image_templates:
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-amd64"
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--pull"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.description=Azure Service Bus traffic inspector and proxy"
+      - "--label=org.opencontainers.image.url=https://github.com/pikami/servicebus-spy"
+      - "--label=org.opencontainers.image.source=https://github.com/pikami/servicebus-spy"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+  - id: docker-linux-arm64
+    goos: linux
+    goarch: arm64
+    image_templates:
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-arm64"
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-arm64v8"
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/arm64"
+      - "--pull"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.description=Azure Service Bus traffic inspector and proxy"
+      - "--label=org.opencontainers.image.url=https://github.com/pikami/servicebus-spy"
+      - "--label=org.opencontainers.image.source=https://github.com/pikami/servicebus-spy"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+
+docker_manifests:
+  - name_template: "ghcr.io/pikami/{{ .ProjectName }}:latest"
+    skip_push: auto
+    image_templates:
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-amd64"
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-arm64"
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-arm64v8"
+  - name_template: "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}"
+    skip_push: auto
+    image_templates:
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-amd64"
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-arm64"
+      - "ghcr.io/pikami/{{ .ProjectName }}:{{ .Version }}-arm64v8"
+
+checksum:
+  name_template: "checksums.txt"

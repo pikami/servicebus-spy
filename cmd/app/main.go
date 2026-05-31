@@ -16,7 +16,7 @@ func main() {
 	serviceBusClient := servicebusclient.NewServiceBusClient(config.ServiceBusConnectionString)
 	defer serviceBusClient.Close()
 
-	webAPI := webapi.NewWebAPI(config.WebPort, messageCollection, serviceBusClient)
+	webAPI := webapi.NewWebAPI(config.WebPort, config.WebDist, messageCollection, serviceBusClient)
 	go webAPI.StartWebAPI()
 
 	amqpHandler := amqphandler.NewAMQPHandler(messageCollection)
