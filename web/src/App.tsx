@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiClient, type Message } from "./lib/api-client";
+import { FavoritesProvider } from "@/lib/favorites-context";
 import { SiteHeader } from "@/components/site-header";
 import { MessageTable } from "@/components/message-table/message-table";
 import { Toaster } from "@/components/ui/sonner";
@@ -13,7 +14,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <FavoritesProvider>
       <div
         data-slot="layout"
         className="bg-background relative z-10 flex min-h-svh flex-col"
@@ -26,7 +27,7 @@ function App() {
         </div>
       </div>
       <Toaster />
-    </>
+    </FavoritesProvider>
   );
 }
 

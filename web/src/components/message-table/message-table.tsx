@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { DataTable } from "@/components/data-table";
 import { MessageDetailsDialog } from "@/components/message-details-dialog";
 import type { Message } from "@/lib/api-client";
+import { messageToFavorite } from "@/lib/favorites";
+import { useFavorites } from "@/lib/favorites-context";
 import type { ColumnDef, ColumnFiltersState, Row } from "@tanstack/react-table";
-import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { TableHeader } from "./message-table-header";
 import { resendMessage } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface MessageTableProps {
   messages: Message[];
@@ -22,6 +25,12 @@ interface MessageTableProps {
 
 export function MessageTable({ messages }: MessageTableProps) {
   const [messageDetails, setMessageDetails] = useState<Message | null>(null);
+  const { addFavorite } = useFavorites();
+
+  const handleSaveAsFavorite = (message: Message) => {
+    addFavorite(messageToFavorite(message));
+    toast.success("Saved to favorites");
+  };
 
   const columns: ColumnDef<Message>[] = [
     {
@@ -87,6 +96,11 @@ export function MessageTable({ messages }: MessageTableProps) {
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => resendMessage(row.original)}>
                 Resend message
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleSaveAsFavorite(row.original)}
+              >
+                Save as favorite
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
