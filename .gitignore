@@ -42,3 +42,9 @@ yarn.lock
 dist
 dist-ssr
 *.local
+
+# Supporting stuff
+_supporting_stuff/
+messages.json
+cmd/runit
+cmd/tcpproxy

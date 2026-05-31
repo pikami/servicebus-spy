@@ -1,4 +1,4 @@
-import { apiClient, type Message } from "@/lib/api-client";
+import { type Message } from "@/lib/api-client";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -16,24 +16,12 @@ import {
   AccordionTrigger,
 } from "./ui/accordion";
 import { CodeBlock } from "./ui/code-block";
+import { resendMessage } from "@/lib/utils";
 
 interface MessageDetailsDialogProps {
   message: Message | null;
   onClose: () => void;
 }
-
-const resendMessage = async (message: Message) => {
-  try {
-    await apiClient.sendMessage({
-      queueOrTopic: message.fullDestination,
-      body: JSON.stringify(message.applicationData),
-      contentType: message.applicationDataType,
-      subject: message.subject,
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 export function MessageDetailsDialog({
   message,

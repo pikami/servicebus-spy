@@ -15,9 +15,9 @@ type MessageCollection struct {
 type ApplicationDataType string
 
 const (
-	ApplicationDataTypeString  ApplicationDataType = "string"
-	ApplicationDataTypeJSON    ApplicationDataType = "json"
-	ApplicationDataTypeBytes   ApplicationDataType = "bytes"
+	ApplicationDataTypeString  ApplicationDataType = "text/plain"
+	ApplicationDataTypeJSON    ApplicationDataType = "application/json"
+	ApplicationDataTypeBytes   ApplicationDataType = "application/octet-stream"
 	ApplicationDataTypeUnknown ApplicationDataType = "unknown"
 )
 

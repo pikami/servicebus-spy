@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { apiClient, type Message } from "./lib/api-client";
-import { SiteHeader } from "./components/site-header";
-import { MessageTable } from "./components/message-table/message-table";
+import { SiteHeader } from "@/components/site-header";
+import { MessageTable } from "@/components/message-table/message-table";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -24,6 +25,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Toaster />
     </>
   );
 }

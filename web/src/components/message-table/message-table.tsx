@@ -14,6 +14,7 @@ import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { TableHeader } from "./message-table-header";
+import { resendMessage } from "@/lib/utils";
 
 interface MessageTableProps {
   messages: Message[];
@@ -83,6 +84,9 @@ export function MessageTable({ messages }: MessageTableProps) {
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setMessageDetails(row.original)}>
                 View message details
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => resendMessage(row.original)}>
+                Resend message
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
